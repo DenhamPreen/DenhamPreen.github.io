@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+    <script src="datamaps.world.js"></script>
+</head>
+<body>
+    <div id="zoom_map" style="position: relative; width: 1000px; height: 600px;"></div>
+    <script>
+        
+var zoom = new Datamap({
+  element: document.getElementById("zoom_map"),
+  scope: 'world',
+  setProjection: function(element) {
+    var projection = d3.geo.equirectangular()
+      .center([25, -20])
+      .rotate([4.4, 0])
+      .scale(1000)
+      .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
+    var path = d3.geo.path()
+      .projection(projection);
+
+    return {path: path, projection: projection};
+  },
+  fills: {
+    defaultFill: "#ABDDA4",
+    southAfricaColour: "#7f7f7f",
+      namibiaColour: "#EEFFFF",
+      mozambiqueColour: "#ABDDAA",
+      swazilandColour: "#ABDDFF",
+      lesothoColour: "#00DDFF",
+      zimbabweColour: "#ABDD3C",    
+    eq50: "#7f7f7f",
+    lt25: "#7f7f7f",
+    gt75: "#7f7f7f",
+    lt50: "#7f7f7f",
+    eq0: "#7f7f7f",
+    pink: '#0fa0fa',
+      red:"red",
+      solar:"yellow",
+      wind:"blue",
+    gt500: "#7f7f7f"
+  },
+  data: {
+    'ZAF': { fillKey: 'southAfricaColour' },
+    'ZWE': { fillKey: 'defaultFill' },
+    'NGA': { fillKey: 'lt50' },
+    'MOZ': { fillKey: 'mozambiqueColour' },
+    'MDG': { fillKey: 'eq50' },
+    'EGY': { fillKey: 'gt75' },
+    'TZA': { fillKey: 'defaultFill' },
+    'LBY': { fillKey: 'eq0' },
+    'DZA': { fillKey: 'gt500' },
+    'SSD': { fillKey: 'defaultFill' },
+    'SOM': { fillKey: 'gt50' },
+    'GIB': { fillKey: 'eq50' },
+    'AGO': { fillKey: 'defaultFill' }
+  }
+});
+zoom.bubbles([
+ {name: 'SAURAN station 1', latitude: -28.10, longitude: 24.50, radius: 3, fillKey: 'red'},
+ {name: 'SAURAN station 2', latitude: -32.10, longitude: 20.50, radius: 3, fillKey: 'red'},
+ {name: 'Solar', latitude: -30.10, longitude: 23.50, radius: 8, fillKey: 'solar'},
+ {name: 'Wind', latitude: -31.42, longitude: 23.10, radius: 5, fillKey: 'wind'},
+], {
+ popupTemplate: function(geo, data) {
+   return "<div class='hoverinfo'>Bubble for " + data.name + "";
+ }
+});
+
+        
+    </script>
+</body>
+</html>
